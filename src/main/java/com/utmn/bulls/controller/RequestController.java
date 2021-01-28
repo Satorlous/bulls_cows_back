@@ -39,11 +39,13 @@ public class RequestController {
 
     @PostMapping("add")
     @PreAuthorize("hasRole('USER')")
-    public void addResult(@RequestBody ResultRequest req, @CurrentUser UserPrincipal userPrincipal) {
+    public boolean addResult(@RequestBody ResultRequest req, @CurrentUser UserPrincipal userPrincipal) {
         Result res = new Result(
                 req.getNumber(), req.getAttempts(),
                 getCurrentUser(userPrincipal));
         resultRepo.save(res);
+        
+        return true;
     }
 
     @PreAuthorize("hasRole('USER')")
